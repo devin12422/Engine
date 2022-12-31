@@ -1,0 +1,4 @@
+#pragma once
+#define ENGINE_NAME @PROJECT_NAME@
+#define ENGINE_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}
+
