@@ -1,15 +1,9 @@
-#include "include/FNXEngine.h"
+#include "include/Engine.h"
 #include "Config.h"
 #include <iostream>
+using namespace ENGINE_NAME;
 int main(){
-    ENGINE_NAME::Engine engine;
-    engine.init();
-    ENGINE_NAME::GLFWWindowObject window;
-    window.init();
-    ENGINE_NAME::WindowHandler::Instance()->addWindow(&window);
-    ENGINE_NAME::WindowHandler::Instance()->iterateWindows([](ENGINE_NAME::IWindowObject* window){
-            std::cout << "balls" << std::endl;
-            });
-    std::cout << "Name " << XSTRING(ENGINE_NAME) << " "<< ENGINE_VERSION << std::endl;
- return 0;
+  Client::Instance i;
+  i.init();
+  return 0;
 }

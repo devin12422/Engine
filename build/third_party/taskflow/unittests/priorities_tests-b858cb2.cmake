@@ -1,0 +1,7 @@
+add_test( SimplePriority.Sequential /home/devin/Documents/Fornax/build/third_party/taskflow/unittests/priorities [==[--test-case=SimplePriority.Sequential]==])
+set_tests_properties( SimplePriority.Sequential PROPERTIES WORKING_DIRECTORY /home/devin/Documents/Fornax/build/third_party/taskflow/unittests)
+add_test( RandomPriority.Sequential /home/devin/Documents/Fornax/build/third_party/taskflow/unittests/priorities [==[--test-case=RandomPriority.Sequential]==])
+set_tests_properties( RandomPriority.Sequential PROPERTIES WORKING_DIRECTORY /home/devin/Documents/Fornax/build/third_party/taskflow/unittests)
+add_test( RandomPriority.Parallel /home/devin/Documents/Fornax/build/third_party/taskflow/unittests/priorities [==[--test-case=RandomPriority.Parallel]==])
+set_tests_properties( RandomPriority.Parallel PROPERTIES WORKING_DIRECTORY /home/devin/Documents/Fornax/build/third_party/taskflow/unittests)
+set( priorities_TESTS SimplePriority.Sequential RandomPriority.Sequential RandomPriority.Parallel)

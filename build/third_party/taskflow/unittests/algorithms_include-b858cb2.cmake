@@ -1,0 +1,5 @@
+if(EXISTS "/home/devin/Documents/Fornax/build/third_party/taskflow/unittests/algorithms_tests-b858cb2.cmake")
+  include("/home/devin/Documents/Fornax/build/third_party/taskflow/unittests/algorithms_tests-b858cb2.cmake")
+else()
+  add_test(algorithms_NOT_BUILT-b858cb2 algorithms_NOT_BUILT-b858cb2)
+endif()

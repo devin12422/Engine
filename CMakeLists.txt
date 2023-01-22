@@ -8,5 +8,5 @@ configure_file(include/Config.h.in Config.h)
 
 add_executable(${PROJECT_NAME} main.cpp FNXEngine.cpp)
 add_subdirectory(third_party)
-target_link_libraries(Fornax glfw)
+target_link_libraries(Fornax glfw Taskflow)
 target_include_directories(Fornax PUBLIC "${PROJECT_BINARY_DIR}" include)

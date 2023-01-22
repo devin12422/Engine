@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/run_and_wait.dir/run_and_wait.cpp.o -o run_and_wait 

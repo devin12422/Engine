@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/Fornax.dir/main.cpp.o CMakeFiles/Fornax.dir/FNXEngine.cpp.o -o Fornax  third_party/glfw/src/libglfw3.a /usr/lib64/librt.a -lm -ldl 

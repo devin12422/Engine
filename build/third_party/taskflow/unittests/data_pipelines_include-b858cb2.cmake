@@ -1,0 +1,5 @@
+if(EXISTS "/home/devin/Documents/Fornax/build/third_party/taskflow/unittests/data_pipelines_tests-b858cb2.cmake")
+  include("/home/devin/Documents/Fornax/build/third_party/taskflow/unittests/data_pipelines_tests-b858cb2.cmake")
+else()
+  add_test(data_pipelines_NOT_BUILT-b858cb2 data_pipelines_NOT_BUILT-b858cb2)
+endif()

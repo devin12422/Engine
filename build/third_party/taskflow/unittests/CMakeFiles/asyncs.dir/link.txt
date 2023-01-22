@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/asyncs.dir/asyncs.cpp.o -o asyncs 

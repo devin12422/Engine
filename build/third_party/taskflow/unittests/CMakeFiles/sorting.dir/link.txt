@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG CMakeFiles/sorting.dir/sorting.cpp.o -o sorting 

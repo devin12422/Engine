@@ -2,12 +2,17 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 #include <deque>
+#include <type_traits>
 #include <set>
+#include <string>
+#include <map>
 #include <functional>
+#include <taskflow/taskflow.hpp>
 #include <algorithm>
 #include "Config.h"
 #define XSTRING(s) STRING(s)
 #define STRING(s) #s
+
 struct FunctionQueue{
     std::deque<std::function<void()>> functors;
     void push_function(std::function<void()>&& function){
@@ -23,6 +28,24 @@ struct FunctionQueue{
 };
 
 namespace ENGINE_NAME{
+    class IBuilt{
+    
+    };
+    class IBuilder{
+        IBuilt instance;
+        public:
+            virtual IBuilder build();
+            virtual IBuilt getBuiltObject();
+    };
+    template <typename BuiltType>
+    class Builder : public IBuilder{
+        static_assert(std::is_base_of<IBuilt, BuiltType>::value, "Is not buildable type");
+        BuiltType instance;
+        public:
+            using built_type = BuiltType;
+            virtual Builder<BuiltType>& build() override;
+            BuiltType getBuiltObject() override;
+    };
     class Renderer{
         public:
         void init();
@@ -31,32 +54,85 @@ namespace ENGINE_NAME{
         public:
         void init();
     };
-    class IWindowObject{
-        void init();
-    };
 
     class WindowHandler{
-        private:
+        public:
+        class IWindowObject : public IBuilt{
+            public:
+                virtual ~IWindowObject();
+
+                virtual void init();
+                virtual void update();
+                
+
+        };
+
+        template <typename WindowType>
+        class WindowObject : public IWindowObject{
+            public:
+                static const size_t id = WindowType::id;
+        };
+        class IWindowManager: public IBuilder{
+            public:  
+                virtual ~IWindowManager();
+                virtual void init();
+                virtual void update();
+                virtual IWindowManager& setTitle(std::string);
+        };
+        template<typename WindowType>
+        class WindowManager : public IWindowManager, protected Builder<WindowType>{
+            WindowManager(){
+static_assert(std::is_base_of<IWindowObject,WindowType>::value, "Type is not a window object");
+            }
+            
+        };
+        class GLFWWindowObject : public WindowObject<GLFWWindowObject>{
+            std::string title;
+            GLFWwindow* window;
+
+            GLFWWindowObject(std::string title);
+            public:
+                static const size_t id = 1;
+                static void resizecallback(GLFWwindow* window,int width, int height){
+                    WindowHandler::Instance()->resizeCallback();
+                };
+
+                ~GLFWWindowObject();
+
+                void init() override;
+                
+                class GLFWWindowManager : public WindowManager<GLFWWindowObject>{
+                    GLFWWindowManager();
+                    public:
+                        ~GLFWWindowManager();
+                        GLFWWindowManager& setTitle(std::string);
+
+                        void update() override;
+
+                        void closeCallback(GLFWwindow* window);
+                };
+            };
+        
+            private:
             bool resized = false;
-            std::set<IWindowObject*> windows;
+            bool initialized = false;
+            std::set<IWindowObject> windows;
+            static std::map<size_t,IWindowManager*> managers;
             static WindowHandler* instance;
             WindowHandler();
         public:
+            ~WindowHandler();
             static WindowHandler* Instance();
-            void addWindow(IWindowObject* window);
+            void init();
+            void update();
+            template<typename BuilderType>
+            BuilderType* getManager();
             void resizeCallback();
-            void iterateWindows(std::function<void(IWindowObject*)> function);
-    };
-  class GLFWWindowObject : public IWindowObject{
-    GLFWwindow* window;
-        public:
-        static void resizeCallback(GLFWwindow* window,int width, int height){
-            WindowHandler::Instance()->resizeCallback();
 
-        };
-        void init();
     };
-    class Engine{
+
+
+     class Engine{
         Renderer renderer; //Temporary, TODO Add layers
         public:
         void init();
